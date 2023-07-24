@@ -67,14 +67,14 @@ type AnimalList<A:Animal> = Vec<A>;
 type EnumList = Vec<E<Cat, Eagle>>;
 
 
-fn list_fly_animal_list(fly_animal_list: FlyAnimalList<Eagle>) {
+fn list_fly_animal_list(fly_animal_list: &FlyAnimalList<Eagle>) {
     for flyAnimal in fly_animal_list {
         flyAnimal.fly();
         flyAnimal.eat();
     }
 }
 
-fn list_fly_animal_list_dyn(fly_animal_list_dyn : Vec<Box<dyn FlyAnimal>>) {
+fn list_fly_animal_list_dyn(fly_animal_list_dyn : &Vec<Box<dyn FlyAnimal>>) {
     for flyAnimal in fly_animal_list_dyn {
         flyAnimal.eat();
         flyAnimal.fly();
@@ -87,7 +87,7 @@ fn list_animal_list(animal_list : AnimalList<Cat>) {
     }
 }
 
-fn list_enum_list(enum_list : EnumList) {
+fn list_enum_list(enum_list : &EnumList) {
     for e in enum_list {
         match e {
             E::Cat(c) => c.jump(),
@@ -104,15 +104,21 @@ pub fn do_q4() {
     let w : E<Cat, Eagle> = E::Caterpillar(Worm{});
     let mut fly_list : FlyAnimalList<Eagle> = Vec::new();
     let mut fly_list_dyn : FlyAnimalListDyn = Vec::new();
+    let mut e_list : EnumList = Vec::new();
 
     let eagle : Option<Eagle> = match e {
         E::Eagle(f) => Some(f),
         _ => None
     };
 
+    e_list.push(c);
+    e_list.push(E::Eagle(Eagle{}));
+    e_list.push(w);
+
     fly_list.push(eagle.unwrap());
     fly_list_dyn.push( Box::new(Eagle{}));
 
-    list_fly_animal_list(fly_list);
-    list_fly_animal_list_dyn(fly_list_dyn);
+    list_fly_animal_list(&fly_list);
+    list_fly_animal_list_dyn(&fly_list_dyn);
+    list_enum_list(&e_list);
 }
