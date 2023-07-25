@@ -2,7 +2,7 @@ use std::ops::{Add, Sub};
 
 // #[derive(Debug, Copy, Clone, PartialEq)]
 trait Negative {
-    fn negative(self) -> bool;
+    fn negative(&self) -> bool;
 }
 
 
@@ -203,17 +203,20 @@ impl<'a> XAddSub<'a, AB> for AB {
 // }
 
 impl Negative for XY {
-    fn negative(self) -> bool {
+    fn negative(&self) -> bool {
         self.x < 0 && self.y < 0
     }
 }
 
 impl Negative for AB {
-    fn negative(self) -> bool {
+    fn negative(&self) -> bool {
         self.a < 0 && self.b > 0
     }
 }
 
+fn test_neg(neg: &dyn Negative) -> bool {
+    neg.negative()
+}
 
 pub fn do_q5() {
     let a = AB{a: 1, b: 2};
@@ -236,6 +239,10 @@ pub fn do_q5() {
     let n : &dyn XAddSub<AB> = &cd;
     let p : &dyn XAddSub<XY> = &ef;
     let q : &dyn XAddSub<AB> = &jk;
+
+    test_neg(&x);
+    test_neg(&ab);
+    // test_neg(m);
 
     println!("{:?}", ab);
     println!("{:?}", cd);
