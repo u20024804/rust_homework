@@ -9,6 +9,7 @@ fn main() -> Result<(), std::io::Error> {
     println!("{:?}", longer_string!(vec![1], vec![1,2], vec![1,2,3]));
     println!("Hello, world!");
 
+    let greeting_file2: File = r#try!(File::open("hello.txt"));
     let greeting_file: File = File::open("hello.txt")?;
     Ok(())
 }
